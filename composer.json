@@ -1,6 +1,7 @@
 {
     "name": "losthost/glock",
     "description": "Description of project glock.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Petros Ioannidis",
