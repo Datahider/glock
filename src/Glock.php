@@ -23,6 +23,11 @@ class Glock {
     protected $timeout;
 
     public function __construct($object_name, $secret, $timeout=self::GLOCK_DEFAULT_TIMEOUT) {
+        
+        if (empty($object_name) || empty($secret) || empty($timeout)) {
+            throw new \Exception('Parameters must not be empty!');
+        }
+        
         $this->lock_name = "$object_name:$secret";
         $this->timeout = $timeout;
     }
