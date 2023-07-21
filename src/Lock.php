@@ -45,6 +45,11 @@ class Lock extends \losthost\DB\DBObject {
     protected $status;
     
     public function __construct($name) {
+        
+        if (empty($name)) {
+            throw new \Exception('Name cannot be empty!');
+        }
+        
         $where = 'name = ?';
         $params = [$name];
         
@@ -66,6 +71,10 @@ class Lock extends \losthost\DB\DBObject {
     }
     
     public function lock($timeout) {
+        
+        if (empty($timeout)) {
+            throw new \Exception('Timeout cannot be empty!');
+        }        
 
         for ($i = 0; $i<$timeout; $i++) {
             if ($this->lockAsync($timeout)) {
@@ -78,6 +87,10 @@ class Lock extends \losthost\DB\DBObject {
     }
     
     public function lockAsync($timeout) {
+
+        if (empty($timeout)) {
+            throw new \Exception('Timeout cannot be empty!');
+        }        
 
         $this->checkUntil();
 
@@ -100,6 +113,10 @@ class Lock extends \losthost\DB\DBObject {
 
 
     public function unlock($unlock_secret) {
+
+        if (empty($unlock_secret)) {
+            throw new \Exception('Unlock secret cannot be empty!');
+        }        
 
         $this->checkUntil();
 
