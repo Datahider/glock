@@ -106,6 +106,7 @@ class Lock extends \losthost\DB\DBObject {
             $this->status = self::STATUS_LOCKED;
             return $this->unlock_secret;
         } catch (\Exception $exc) {
+            $this->__immutable = false;
             return false;
         }
         
@@ -128,7 +129,7 @@ class Lock extends \losthost\DB\DBObject {
             throw new \Exception(self::EXCEPTION_WRONG_SECRET_MSG, self::EXCEPTION_WRONG_SECRET_CODE);
         }
         
-        $this->delete();
+        $this->_delete();
         $this->status = self::STATUS_UNLOCKED;
     }
 
@@ -147,11 +148,11 @@ class Lock extends \losthost\DB\DBObject {
     
     protected function checkUntil() {
         if ($this->until < time()) {
-            $this->delete();
+            $this->_delete();
         }
     }
     
-    protected function delete() {
+    protected function _delete() {
         $sth = $this->prepare(<<<END
                 DELETE FROM %TABLE_NAME%
                 WHERE name = ? AND unlock_secret = ?

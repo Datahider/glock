@@ -12,14 +12,22 @@ namespace losthost\glock;
  *
  * @author drweb
  */
-class LockCleaner extends \losthost\DB\DBObject {
+class LockCleaner extends \losthost\DB\DBView {
     
-    const TABLE_NAME = 'locks';
+    public function __construct() {
+        
+        $sql = <<<END
+                SELECT name
+                FROM [locks]
+                WHERE until < ?
+                END;
+        parent::__construct($sql, time());
+    }
     
     public function clean() {
         
         $sth = $this->prepare(<<<END
-                DELETE FROM %TABLE_NAME%
+                DELETE FROM [locks]
                 WHERE until < ?
                 END);
         

@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=7.4.0",
-        "losthost/db": "v1.0.3",
+        "losthost/db": "v1.4.6",
         "ramsey/uuid": "v4.7.4"
     },
     "autoload": {
